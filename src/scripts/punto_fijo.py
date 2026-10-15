@@ -1,42 +1,61 @@
 import sympy as sp
-funcion = lambda x: sp.ln(x) + x - 4
 
-x, y = sp.symbols('x y')
+def g_x(funcion, punto):
+    x, y = sp.symbols('x y')
+    str_funcion = str(funcion(x))
+    expresion = list(str_funcion)
 
-expresion = str(funcion(x))
-caracteres = list(expresion)
+    a_despejar = []
+    despejes =[]
+    depejes_validos = []
 
-posibles_despejes = []
-despejes =[]
-for i in range(0, len(caracteres)):
-    if caracteres[i] == 'x':
-        caracteres[i] = 'y'
-        posibles_despejes.append(''.join(caracteres))
-        caracteres[i] = 'x'
-posibles_despejes.append(expresion + " + y = x")
+    for i in range(0, len(expresion)):
+        if expresion[i] == 'x':
+            expresion[i] = 'y'
+            a_despejar.append(''.join(expresion))
+            expresion[i] = 'x'
+    a_despejar.append(''.join(expresion) + " + y = x")
 
-for i, despeje in enumerate(posibles_despejes):
-    if i == len(posibles_despejes) - 1:
-        partes = despeje.split('=')
-        ecuacion = sp.Eq(sp.sympify(partes[0]), sp.sympify(partes[1]))
-    else:
-        ecuacion = sp.sympify(despeje)
-    resultado = sp.solve(ecuacion, y)
-    despejes.append(resultado)
+    for despeje in a_despejar:
+        if despeje == a_despejar[-1]:
+            partes = despeje.split('=')
+            ecuacion = sp.Eq(sp.sympify(partes[0]), sp.sympify(partes[1]))
+        else:
+            ecuacion = sp.sympify(despeje)
+        resultado = sp.solve(ecuacion, y)
+        despejes.append(resultado)
 
-despejes_validos = []
+    for lista in despejes:
+        for g in lista:
+            if g.has(x):
+                derivada = sp.diff(g, x)
+                valor = abs(derivada.subs(x, punto))
 
-for lista in despejes:
-    for g in lista:
-        if g.has(x):
-            derivada = sp.diff(g, x)
-            valor = abs(derivada.subs(x, 1.5))
+                if valor < 1:
+                    depejes_validos.append(g)
 
-            if valor < 1:
-                despejes_validos.append(g)
+    return depejes_validos[0] if depejes_validos else "Sin despeje valido"
 
-print("Despejes válidos:", despejes_validos)
+def punto_fijo(funcion, x0, tolerancia, max_iteraciones):
+    gx = g_x(funcion, x0)
+    iteraciones = 0
+    while iteraciones < max_iteraciones:
+        x1 = float(gx.subs('x', x0))
+
+        error = abs((x1 - x0) / x1) * 100 if x1 != 0 else abs(x1 - x0) * 100
+        if abs(x1 - x0) < tolerancia:
+            return x1, error, iteraciones
+        x0 = x1
+        iteraciones += 1
+
+    return None, "No converge"
 
 
-
-
+if __name__ == "__main__":
+    funcion = lambda x: x**3 - x - 2
+    a = 1
+    b = 2
+    tolerancia = 1e-6   
+    max_iteraciones = 100
+    resultado = punto_fijo(funcion, 2, tolerancia, max_iteraciones)
+    print(f"Resultado: {resultado}")
