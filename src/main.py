@@ -9,6 +9,7 @@ from scripts.newton_raphson import newton_raphson #funcion,x0,tolerancia,max_ite
 from scripts.nr_modificado import newton_raphson_modificado #funcion,x0,tolerancia,max_iteraciones
 from data.casos_estudio import CE
 
+
 t = CE["Tolerancia"]
 it = CE["Iteraciones"]
 ps = CE["PolinomioSimple"]
@@ -17,6 +18,7 @@ lo = CE["Logaritmo"]
 ex = CE["Exponencial"]
 tri = CE["Trigonometrica"]
 mi = CE["Mixta"]
+
 
 def obtener_resultados():
     func_ps = [] #Funcion Polinomica Simple
@@ -91,6 +93,56 @@ def crear_csv(func_ps, func_pd, func_log, func_exp, func_tri, func_mix):
                 fila.append(datos)
             escritor.writerow(fila)
 
+def grafico_FuncionRaiz():
+    _, ax = plt.subplots(2, 3)
+
+    fps = ps["f(x)"]
+    fpd = pd["f(x)"]
+    flo = lo["f(x)"]
+    fex = ex["f(x)"]
+    ftri = tri["f(x)"]
+    fmi = mi["f(x)"]
+
+    valores_x = [i / 100 for i in range(-400, 401)]
+
+    ax[0, 0].plot(valores_x, [fps(x) for x in valores_x])
+    ax[0, 0].set_xlim(-4, 4)
+    ax[0, 0].set_ylim(-4, 4)
+    ax[0, 0].set_title("Polinomio Simple")
+
+
+    ax[0, 1].plot(valores_x, [fpd(x) for x in valores_x])
+    ax[0, 1].set_xlim(-4, 4)
+    ax[0, 1].set_ylim(-4, 4)
+    ax[0, 1].set_title("Polinomio Doble")
+
+
+    x_log = [x for x in valores_x if x > 0]
+    ax[0, 2].plot(x_log, [flo(x) for x in x_log])
+    ax[0, 2].set_xlim(0, 4)
+    ax[0, 2].set_ylim(0, 4)
+    ax[0, 2].set_title("Logaritmo")
+
+    
+    ax[1, 0].plot(valores_x, [fex(x) for x in valores_x])
+    ax[1, 0].set_xlim(-4, 4)
+    ax[1, 0].set_ylim(-4, 4)
+    ax[1, 0].set_title("Exponencial")
+
+    
+    ax[1, 1].plot(valores_x, [ftri(x) for x in valores_x])
+    ax[1, 1].set_xlim(-4, 4)
+    ax[1, 1].set_ylim(-4, 4)
+    ax[1, 1].set_title("Trigonometica")
+
+    x_mix = [x for x in valores_x if x >= 0]
+    ax[1, 2].plot(x_mix, [fmi(x) for x in x_mix])
+    ax[1, 2].set_xlim(0, 4)
+    ax[1, 2].set_ylim(0, 4)
+    ax[1, 2].set_title("Mixta")
+
+    plt.tight_layout()
+    plt.show()
+
 if __name__ == "__main__":
-    func_ps, func_pd, func_log, func_exp, func_tri, func_mix = obtener_resultados()
-    crear_csv(func_ps, func_pd, func_log, func_exp, func_tri, func_mix)
+    grafico_FuncionRaiz()
