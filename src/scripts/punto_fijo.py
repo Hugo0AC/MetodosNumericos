@@ -1,6 +1,6 @@
 import sympy as sp
 
-def g_x(funcion, punto):
+def g_x(funcion, punto): #Obtener posible g(x) a partir de f(x)
     x, y = sp.symbols('x y')
     str_funcion = str(funcion(x))
     expresion = list(str_funcion)
@@ -36,7 +36,7 @@ def g_x(funcion, punto):
 
     return depejes_validos[0] if depejes_validos else "Sin despeje valido"
 
-def punto_fijo(funcion, x0, tolerancia, max_iteraciones):
+def punto_fijo(funcion, x0, tolerancia, max_iteraciones): #Metodo iterativo
     gx = g_x(funcion, x0)
     iteraciones = 0
     while iteraciones < max_iteraciones:
@@ -49,13 +49,3 @@ def punto_fijo(funcion, x0, tolerancia, max_iteraciones):
         iteraciones += 1
 
     return None, "No converge"
-
-
-if __name__ == "__main__":
-    funcion = lambda x: x**3 - x - 2
-    a = 1
-    b = 2
-    tolerancia = 1e-6   
-    max_iteraciones = 100
-    resultado = punto_fijo(funcion, 2, tolerancia, max_iteraciones)
-    print(f"Resultado: {resultado}")

@@ -1,17 +1,16 @@
-#Codigo utiliza funciones lambda como parametro
-def bolzano(funcion, a, b):
+def bolzano(funcion, a, b): #cambio de signo
     if funcion(a) * funcion(b) < 0:
         return True
     else:
         return False
 
-def punto_corte(funcion, a, b):
+def punto_corte(funcion, a, b): #Nuevo punto C
     numerador = funcion(b) * (a - b)
     denominador = funcion(a) - funcion(b)
     c = b - (numerador / denominador)
     return c
 
-def falsa_posicion(funcion, a, b, tolerancia, max_iteraciones):
+def falsa_posicion(funcion, a, b, tolerancia, max_iteraciones): #iteracion
     if not bolzano(funcion, a, b):
         return None, "No cumple bolzano"
     iteracion = 0
@@ -36,12 +35,3 @@ def falsa_posicion(funcion, a, b, tolerancia, max_iteraciones):
         iteracion += 1
 
     return None, "No se llego a una solucion dentro del numero maximo de itraciones"
-
-if __name__ == "__main__":
-    funcion = lambda x: x**3 - x - 2
-    a = 1
-    b = 2
-    tolerancia = 1e-6   
-    max_iteraciones = 100
-    resultado = falsa_posicion(funcion, a, b, tolerancia, max_iteraciones)
-    print(f"Resultado: {resultado}")

@@ -1,15 +1,13 @@
-import math
-
-def bolzano(funcion, a, b):
+def bolzano(funcion, a, b): #cambio signo
     if funcion(a) * funcion(b) < 0:
         return True
     else:
         return False
 
-def valor_medio(a, b):
+def valor_medio(a, b): #C
     return (a + b) / 2
 
-def biseccion(funcion, a, b, tolerancia, max_iteraciones):
+def biseccion(funcion, a, b, tolerancia, max_iteraciones): #metodo iterativo
     if not bolzano(funcion, a, b):
         return None, "No cumple bolzano"
 
@@ -34,12 +32,3 @@ def biseccion(funcion, a, b, tolerancia, max_iteraciones):
         iteracion += 1
 
     return None, "No se llego a una solucion dentro del numero maximo de itraciones"
-
-if __name__ == "__main__":
-    funcion = lambda x: math.cos(x) - x
-    a = 0
-    b = 1
-    tolerancia = 1e-6   
-    max_iteraciones = 100
-    resultado = biseccion(funcion, a, b, tolerancia, max_iteraciones)
-    print(f"Resultado: {resultado}")
