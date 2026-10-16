@@ -17,14 +17,16 @@ def newton_raphson_modificado(funcion, x_actual, tolerancia, max_iteraciones): #
     iteracion = 0
     derivada = derivar(funcion, 1)
     segunda_derivada = derivar(funcion, 2)
+    errores = []
 
     while iteracion < max_iteraciones:
         x_nueva = siguiente_punto(funcion, derivada, segunda_derivada, x_actual)
         error = abs((x_nueva - x_actual) / x_nueva) * 100 if x_nueva != 0 else abs(x_nueva - x_actual) * 100
+        errores.append(error)
         x_actual = x_nueva
 
         if abs(funcion(x_actual)) < tolerancia:
-            return x_actual, error, iteracion
+            return x_actual, errores, iteracion
         
         iteracion += 1
 

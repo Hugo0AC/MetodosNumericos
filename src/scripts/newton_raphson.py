@@ -12,13 +12,14 @@ def siguiente_punto(funcion, derivada, x_actual): #formula
 def newton_raphson(funcion, x_actual, tolerancia, max_iteraciones): #paso iteratico
     iteracion = 0
     derivada = derivar(funcion)
+    errores = []
 
     while iteracion < max_iteraciones:
         x_nueva = float(siguiente_punto(funcion, derivada, x_actual))
         error = abs((x_nueva - x_actual) / x_nueva) * 100 if x_nueva != 0 else abs(x_nueva - x_actual) * 100
-
+        errores.append(error)
         if abs(funcion(x_actual)) < tolerancia:
-            return x_actual, error, iteracion
+            return x_actual, errores, iteracion
 
         x_actual = x_nueva
         iteracion += 1

@@ -41,12 +41,15 @@ def punto_fijo(funcion, x0, tolerancia, max_iteraciones): #Metodo iterativo
     if gx == "Sin despeje valido":
         return gx
     iteraciones = 0
+    errores = []
+
     while iteraciones < max_iteraciones:
         x1 = float(gx.subs('x', x0))
 
         error = abs((x1 - x0) / x1) * 100 if x1 != 0 else abs(x1 - x0) * 100
+        errores.append(error)
         if abs(x1 - x0) < tolerancia:
-            return x1, error, iteraciones
+            return x1, errores, iteraciones
         x0 = x1
         iteraciones += 1
 
