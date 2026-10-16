@@ -38,6 +38,8 @@ def g_x(funcion, punto): #Obtener posible g(x) a partir de f(x)
 
 def punto_fijo(funcion, x0, tolerancia, max_iteraciones): #Metodo iterativo
     gx = g_x(funcion, x0)
+    if gx == "Sin despeje valido":
+        return gx
     iteraciones = 0
     while iteraciones < max_iteraciones:
         x1 = float(gx.subs('x', x0))

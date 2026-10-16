@@ -17,7 +17,7 @@ def falsa_posicion(funcion, a, b, tolerancia, max_iteraciones): #iteracion
     c_anterior = None
     
     while iteracion < max_iteraciones:
-        c = punto_corte(funcion, a, b)
+        c = punto_corte(funcion, float(a), float(b))
         if c_anterior is not None:
             error = abs((c - c_anterior) / c) * 100 if c != 0 else abs(c - c_anterior) * 100
             if error < tolerancia:
@@ -26,7 +26,7 @@ def falsa_posicion(funcion, a, b, tolerancia, max_iteraciones): #iteracion
             error = 0.0
         c_anterior = c
 
-        if bolzano(funcion, a, c):
+        if bolzano(funcion, float(a), float(c)):
             b = c
         else:
             a = c

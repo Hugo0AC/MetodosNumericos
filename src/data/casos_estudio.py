@@ -1,6 +1,6 @@
 import sympy as sp
 
-CASOS = {
+CE= {
     "PolinomioSimple": {
         "f(x)": lambda x: x**3 - x - 2,
         "a": 1,
@@ -40,7 +40,7 @@ CASOS = {
         "f(x)": lambda x: sp.sqrt(x) - sp.cos(x),
         "a": 0.5,
         "b": 1.1,
-        "x0": 0.023,
+        "x0": 0.223,
         "x1": 0.93,
     },
     "Tolerancia": 1e-6,

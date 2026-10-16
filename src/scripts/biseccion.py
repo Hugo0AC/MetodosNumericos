@@ -26,8 +26,7 @@ def biseccion(funcion, a, b, tolerancia, max_iteraciones): #metodo iterativo
         else:
             a = c
 
-        if abs(funcion(c)) < tolerancia:
-            error = 0.0 
+        if abs(funcion(c)) < tolerancia: 
             return c, error, iteracion
         iteracion += 1
 
