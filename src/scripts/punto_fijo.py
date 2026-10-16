@@ -39,7 +39,7 @@ def g_x(funcion, punto): #Obtener posible g(x) a partir de f(x)
 def punto_fijo(funcion, x0, tolerancia, max_iteraciones): #Metodo iterativo
     gx = g_x(funcion, x0)
     if gx == "Sin despeje valido":
-        return gx
+        return None, gx
     iteraciones = 0
     errores = []
 

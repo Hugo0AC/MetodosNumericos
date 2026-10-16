@@ -1,5 +1,6 @@
 import sympy as sp
 import matplotlib.pyplot as plt
+import csv
 from scripts.biseccion import biseccion #funcion,a,b,tolerancia,max_iteraciones
 from scripts.falsa_posicion import falsa_posicion #funcion,a,b,tolerancia,max_iteraciones
 from scripts.punto_fijo import punto_fijo #funcion,x0,tolerancia.max_iteraciones
@@ -17,8 +18,7 @@ ex = CE["Exponencial"]
 tri = CE["Trigonometrica"]
 mi = CE["Mixta"]
 
-
-if __name__ == "__main__":
+def obtener_resultados():
     func_ps = [] #Funcion Polinomica Simple
     func_ps.append(biseccion(ps["f(x)"], ps["a"], ps["b"], t, it))
     func_ps.append(falsa_posicion(ps["f(x)"], ps["a"], ps["b"], t, it))
@@ -67,9 +67,30 @@ if __name__ == "__main__":
     func_mix.append(newton_raphson(mi["f(x)"], mi["x0"], t, it))
     func_mix.append(newton_raphson_modificado(mi["f(x)"], mi["x0"], t, it))
 
-    print(func_ps)
-    print(func_pd)
-    print(func_log)
-    print(func_exp)
-    print(func_tri)
-    print(func_mix)
+    return func_ps, func_pd, func_log, func_exp, func_tri, func_mix
+
+
+def crear_csv(func_ps, func_pd, func_log, func_exp, func_tri, func_mix):
+    funciones = ["PolinomicaSimple", "PolinomicaDoble", "Logaritmica", "Exponencial", "Trigonometrica", "Mixta"]
+    metodos = ["Biseccion", "FalsaPosicion", "PuntoFijo", "Secante", "NewtonRaphson", "NewtonRaphsonMOD"]
+    resultados = [func_ps, func_pd, func_log, func_exp, func_tri, func_mix]
+
+    with open("src\\data\\resultados.csv", "w", newline="", encoding="utf-8") as archivo:
+        escritor = csv.writer(archivo)
+        escritor.writerow(["Metodo"] + funciones)
+        for i, metodo in enumerate(metodos):
+            fila = [metodo]
+            for resultado_funcion in resultados:
+                resultado = resultado_funcion[i]
+                if resultado[0] is None:
+                    datos = "Raiz: N.A.N. | Error: N.A.N. | Iteraciones: N.A.N."
+                else:
+                    valor, historial_errores, iteraciones = resultado
+                    datos = (f"Raiz: {valor} | Error: {historial_errores[-1]} | Iteraciones: {iteraciones}")
+
+                fila.append(datos)
+            escritor.writerow(fila)
+
+if __name__ == "__main__":
+    func_ps, func_pd, func_log, func_exp, func_tri, func_mix = obtener_resultados()
+    crear_csv(func_ps, func_pd, func_log, func_exp, func_tri, func_mix)
