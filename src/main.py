@@ -160,7 +160,7 @@ def grafico_FuncionRaiz(mejores_puntos):
     ax[1, 2].grid(True)
 
     plt.tight_layout()
-    plt.show()
+    plt.savefig("src\\assets\\Funcion y raiz.png")
 
 #Los metodos siempre iran en el orden:
 #Biseccion -> FalsaPosicion -> PuntoFijo -> Secante -> NewtonRaphson ->NewtonRaphsonModificado
@@ -189,7 +189,8 @@ def grafico_ErrorIteracion(resultados):
         plt.grid(True, which="both", linestyle="--", alpha=0.5)
         plt.tight_layout()
         
-        plt.show()              
+        plt.savefig(f"src\\assets\\{nombre_func}.png") 
+        plt.close()           
 
 def grafico_CantidadIteraciones(resultados):
     nombres_funciones = list(CE.keys())[0:-2]
@@ -226,7 +227,7 @@ def grafico_CantidadIteraciones(resultados):
     plt.grid(axis='y', linestyle='--', alpha=0.5)
     plt.tight_layout()
     
-    plt.show()
+    plt.savefig(f"src\\assets\\Iteraciones por funcion.png")
 
 
 
@@ -276,12 +277,8 @@ if __name__ == "__main__":
     resultados = [func_ps, func_pd, func_log, func_exp, func_tri, func_mix]
     funciones = [ps["f(x)"], pd["f(x)"], lo["f(x)"], ex["f(x)"], tri["f(x)"], mi["f(x)"]]
 
-    #mejores_puntos = mejor_raiz(resultados, funciones)
-    #print(mejores_puntos)
-    #grafico_FuncionRaiz(mejores_puntos)
-    #print(list(CE.keys()))
+    mejores_puntos = mejor_raiz(resultados, funciones)
 
-    #grafico_ErrorIteracion(resultados)
-    #grafico_CantidadIteraciones(resultados)
-    #print(obtener_datos_resultado(resultados, -1))
-    #print(list(CE.keys())[0:-2])
+    grafico_FuncionRaiz(mejores_puntos)
+    grafico_CantidadIteraciones(resultados)
+    grafico_ErrorIteracion(resultados)
