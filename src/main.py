@@ -1,4 +1,3 @@
-import sympy as sp
 import matplotlib.pyplot as plt
 import csv
 from scripts.biseccion import biseccion #funcion,a,b,tolerancia,max_iteraciones
@@ -10,6 +9,7 @@ from scripts.nr_modificado import newton_raphson_modificado #funcion,x0,toleranc
 from data.casos_estudio import CE
 
 
+
 t = CE["Tolerancia"]
 it = CE["Iteraciones"]
 ps = CE["PolinomioSimple"]
@@ -18,6 +18,7 @@ lo = CE["Logaritmo"]
 ex = CE["Exponencial"]
 tri = CE["Trigonometrica"]
 mi = CE["Mixta"]
+
 
 
 def obtener_resultados():
@@ -71,11 +72,45 @@ def obtener_resultados():
 
     return func_ps, func_pd, func_log, func_exp, func_tri, func_mix
 
+#n = 0 -> Raiz  ;  n = 1 -> Historial errores  ;  n = -1 -> Iteraciones 
+def obtener_datos_resultado(resultados, n):
+    datos = []
+    for j in range(0, len(resultados)):
+        val_metodos = []
+        for i in range(0, len(resultados[j])):
+            val_dato = resultados[j][i][n]
+            if val_dato is None or isinstance(val_dato, str):
+                val_metodos.append(None)
+            else:
+                val_metodos.append(val_dato)
+        datos.append(val_metodos)
+    return datos
 
-def crear_csv(resultados):
-    funciones = ["PolinomicaSimple", "PolinomicaDoble", "Logaritmica", "Exponencial", "Trigonometrica", "Mixta"]
-    metodos = ["Biseccion", "FalsaPosicion", "PuntoFijo", "Secante", "NewtonRaphson", "NewtonRaphsonMOD"]
+def mejor_raiz(resultados, funciones):
+    raices = obtener_datos_resultado(resultados, 0)
 
+    mejores_indices = []
+    for i in range(0, len(funciones)):
+        residuos_metodos = []
+        for j in range(len(raices[i])):
+            if raices[i][j] != None:
+                residuos_metodos.append(abs(funciones[i](raices[i][j])))
+            else: 
+                residuos_metodos.append(9999)
+
+        min_residuo = min(residuos_metodos)
+        mejor_indice = residuos_metodos.index(min_residuo)
+        mejores_indices.append(mejor_indice)
+
+    mejores_puntos = []
+    for i in range(0, 6):
+        mejores_puntos.append(raices[i][mejores_indices[i]])
+
+    return mejores_puntos
+
+
+
+def crear_csv(resultados, funciones, metodos):
     with open("src\\data\\resultados.csv", "w", newline="", encoding="utf-8") as archivo:
         escritor = csv.writer(archivo)
         escritor.writerow(["Metodo"] + funciones)
@@ -91,6 +126,23 @@ def crear_csv(resultados):
 
                 fila.append(datos)
             escritor.writerow(fila)
+
+def csv_funciones(resultados, nombres_funciones, nombres_metodos, fx):  
+    #NombreFuncion, Funcion, Metodo, x, f(x)
+    raices_totales = obtener_datos_resultado(resultados, 0)
+    funciones = ["x**3 - x - 2", "(x - 2)**2", "ln(x) + x - 4", "exp(-x) - x", "cos(x) - x", "sqrt(x) - cos(x)"]
+
+    with open("src\\data\\xfx_evalauda.csv", mode = "w", newline = "", encoding = "utf-8") as file:
+        escribir = csv.writer(file)
+        escribir.writerow(["NombreFuncion", "Funcion", "Metodo", "x", "f(x)"])
+        for raices_funciones, nombre, fun, fx_evaluada in zip(raices_totales, nombres_funciones, funciones, fx):
+            for raiz, metodo in zip(raices_funciones, nombres_metodos):
+                if raiz == None:
+                    escribir.writerow([nombre, fun, metodo, "NAN", "NAN"])
+                else:
+                    escribir.writerow([nombre, fun, metodo, raiz, fx_evaluada(raiz)])
+
+
 
 def grafico_FuncionRaiz(mejores_puntos):
     _, ax = plt.subplots(2, 3)
@@ -166,10 +218,7 @@ def grafico_FuncionRaiz(mejores_puntos):
 #Biseccion -> FalsaPosicion -> PuntoFijo -> Secante -> NewtonRaphson ->NewtonRaphsonModificado
 #Funciones: PoliniomioSimple[0], PolinomioDoble[1], Logaritmica[2], Exponencial[3], Trignonometrica[4], Mixta[5]
 #Errores: Resultados[0][metodo][1] 
-def grafico_ErrorIteracion(resultados):
-    nombres_funciones = list(CE.keys())[0:-2]
-    nombres_medotos = ["Biseccion", "FalsaPosicion", "PuntoFijo", "Secante", "Newton", "NewtonMOD"]
-
+def grafico_ErrorIteracion(resultados, nombres_funciones, nombres_medotos):
     historial_errores = obtener_datos_resultado(resultados, 1)
     for i in range(len(historial_errores)):
         nombre_func = nombres_funciones[i]
@@ -192,18 +241,13 @@ def grafico_ErrorIteracion(resultados):
         plt.savefig(f"src\\assets\\{nombre_func}.png") 
         plt.close()           
 
-def grafico_CantidadIteraciones(resultados):
-    nombres_funciones = list(CE.keys())[0:-2]
-    nombres_metodos = ["Biseccion", "FalsaPosicion", "PuntoFijo", "Secante", "Newton", "NewtonMOD"]
-
+def grafico_CantidadIteraciones(resultados, nombres_funciones, nombres_metodos):
     iteraciones = obtener_datos_resultado(resultados, -1)
-    
     num_funciones = len(nombres_funciones)
     num_metodos = len(nombres_metodos)
     
     x = list(range(num_funciones))
     ancho = 0.12  
-
     plt.figure(figsize=(11, 6))
 
     for i in range(num_metodos):
@@ -215,60 +259,17 @@ def grafico_CantidadIteraciones(resultados):
                 pos_x = x[j] + (i - 2.5) * ancho
                 x_barras.append(pos_x)
                 y_barras.append(val)
-                
         if x_barras:
             plt.bar(x_barras, y_barras, width=ancho, label=nombres_metodos[i])
 
+    plt.xticks(x, nombres_funciones, rotation=15, ha='right')
     plt.xlabel('Funciones de estudio', fontsize=11, fontweight='bold')
     plt.ylabel('Iteraciones', fontsize=11, fontweight='bold')
     plt.title('Iteraciones por for funcion, segun metodo', fontsize=13, fontweight='bold')
-    
     plt.legend(title='Metodos', bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.grid(axis='y', linestyle='--', alpha=0.5)
     plt.tight_layout()
-    
     plt.savefig(f"src\\assets\\Iteraciones por funcion.png")
-
-
-
-
-
-#n = 0 -> Raiz  ;  n = 1 -> Historial errores  ;  n = 2 -> Iteraciones 
-def obtener_datos_resultado(resultados, n):
-    datos = []
-    for j in range(0, len(resultados)):
-        val_metodos = []
-        for i in range(0, len(resultados[j])):
-            val_dato = resultados[j][i][n]
-            if val_dato is None or isinstance(val_dato, str):
-                val_metodos.append(None)
-            else:
-                val_metodos.append(val_dato)
-        datos.append(val_metodos)
-    return datos
-
-def mejor_raiz(resultados, funciones):
-    raices = obtener_datos_resultado(resultados, 0)
-
-    mejores_indices = []
-    for i in range(0, len(funciones)):
-        residuos_metodos = []
-        for j in range(len(raices[i])):
-            if raices[i][j] != None:
-                residuos_metodos.append(abs(funciones[i](raices[i][j])))
-            else: 
-                residuos_metodos.append(9999)
-
-        min_residuo = min(residuos_metodos)
-        mejor_indice = residuos_metodos.index(min_residuo)
-        mejores_indices.append(mejor_indice)
-
-    mejores_puntos = []
-    for i in range(0, 6):
-        mejores_puntos.append(raices[i][mejores_indices[i]])
-
-    return mejores_puntos
-
 
 
 
@@ -276,9 +277,13 @@ if __name__ == "__main__":
     func_ps, func_pd, func_log, func_exp, func_tri, func_mix = obtener_resultados()
     resultados = [func_ps, func_pd, func_log, func_exp, func_tri, func_mix]
     funciones = [ps["f(x)"], pd["f(x)"], lo["f(x)"], ex["f(x)"], tri["f(x)"], mi["f(x)"]]
-
+    nombres_funciones = list(CE.keys())[0:-2]
+    nombres_medotos = ["Biseccion", "FalsaPosicion", "PuntoFijo", "Secante", "Newton", "NewtonMOD"]
     mejores_puntos = mejor_raiz(resultados, funciones)
 
+    crear_csv(resultados, nombres_funciones, nombres_medotos)
+    csv_funciones(resultados, nombres_funciones, nombres_medotos, funciones)
+
     grafico_FuncionRaiz(mejores_puntos)
-    grafico_CantidadIteraciones(resultados)
-    grafico_ErrorIteracion(resultados)
+    grafico_ErrorIteracion(resultados, nombres_funciones, nombres_medotos)
+    grafico_CantidadIteraciones(resultados, nombres_funciones, nombres_medotos)
