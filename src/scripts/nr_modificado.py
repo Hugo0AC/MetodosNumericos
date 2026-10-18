@@ -10,6 +10,8 @@ def siguiente_punto(funcion, derivada, segunda_derivada, x_actual): #Formula
     evaluacion_segunda_derivada = float(segunda_derivada.subs(sp.symbols('x'), x_actual))
     numerador = funcion(x_actual) * evaluacion_derivada
     denominador = (evaluacion_derivada**2) - funcion(x_actual) * evaluacion_segunda_derivada
+    if denominador == 0:
+        return None
     x_nueva = x_actual - (numerador / denominador)
     return x_nueva
 
@@ -21,12 +23,14 @@ def newton_raphson_modificado(funcion, x_actual, tolerancia, max_iteraciones): #
 
     while iteracion < max_iteraciones:
         x_nueva = siguiente_punto(funcion, derivada, segunda_derivada, x_actual)
+        if x_nueva is None:
+            return x_actual, errores, iteracion  
         error = abs((x_nueva - x_actual) / x_nueva) * 100 if x_nueva != 0 else abs(x_nueva - x_actual) * 100
         errores.append(error)
-        x_actual = x_nueva
 
-        if abs(funcion(x_actual)) < tolerancia:
+        if error < tolerancia:
             return x_actual, errores, iteracion
+        x_actual = x_nueva
         
         iteracion += 1
 

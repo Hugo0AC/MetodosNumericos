@@ -1,3 +1,4 @@
+#Modulos
 import matplotlib.pyplot as plt
 import csv
 from scripts.biseccion import biseccion #funcion,a,b,tolerancia,max_iteraciones
@@ -10,6 +11,7 @@ from data.casos_estudio import CE
 
 
 
+#Primera parte
 t = CE["Tolerancia"]
 it = CE["Iteraciones"]
 ps = CE["PolinomioSimple"]
@@ -110,6 +112,7 @@ def mejor_raiz(resultados, funciones):
 
 
 
+#Segunda parte
 def crear_csv(resultados, funciones, metodos):
     with open("src\\data\\resultados.csv", "w", newline="", encoding="utf-8") as archivo:
         escritor = csv.writer(archivo)
@@ -144,6 +147,7 @@ def csv_funciones(resultados, nombres_funciones, nombres_metodos, fx):
 
 
 
+#Tercera parte
 def grafico_FuncionRaiz(mejores_puntos):
     _, ax = plt.subplots(2, 3)
 
@@ -287,3 +291,5 @@ if __name__ == "__main__":
     grafico_FuncionRaiz(mejores_puntos)
     grafico_ErrorIteracion(resultados, nombres_funciones, nombres_medotos)
     grafico_CantidadIteraciones(resultados, nombres_funciones, nombres_medotos)
+
+    print("Fin de ejecucion")

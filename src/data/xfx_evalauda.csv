@@ -1,37 +1,37 @@
 NombreFuncion,Funcion,Metodo,x,f(x)
-PolinomioSimple,x**3 - x - 2,Biseccion,1.5213797092437744,1.4498129807805071e-08
-PolinomioSimple,x**3 - x - 2,FalsaPosicion,1.5213796360454928,-4.205769621457023e-07
-PolinomioSimple,x**3 - x - 2,PuntoFijo,1.5213796451081725,-3.6671031478086036e-07
-PolinomioSimple,x**3 - x - 2,Secante,1.5213797068590216,3.2366287427976204e-10
+PolinomioSimple,x**3 - x - 2,Biseccion,1.5213796943426132,-7.407122204483585e-08
+PolinomioSimple,x**3 - x - 2,FalsaPosicion,1.521379700903058,-3.5077324822552214e-08
+PolinomioSimple,x**3 - x - 2,PuntoFijo,1.5213797055249894,-7.605542640121143e-09
+PolinomioSimple,x**3 - x - 2,Secante,1.5213797068045676,0.0
 PolinomioSimple,x**3 - x - 2,Newton,1.5213797113688294,2.71290074849162e-08
 PolinomioSimple,x**3 - x - 2,NewtonMOD,1.521379705420118,-8.228876247073913e-09
 PolinomioDoble,(x - 2)**2,Biseccion,NAN,NAN
 PolinomioDoble,(x - 2)**2,FalsaPosicion,NAN,NAN
 PolinomioDoble,(x - 2)**2,PuntoFijo,NAN,NAN
-PolinomioDoble,(x - 2)**2,Secante,2.000752587017874,5.663872194727414e-07
-PolinomioDoble,(x - 2)**2,Newton,1.99921875,6.103515624999307e-07
+PolinomioDoble,(x - 2)**2,Secante,2.0000000307475716,9.454131592929258e-16
+PolinomioDoble,(x - 2)**2,Newton,1.9999999761581422,5.684341843729154e-16
 PolinomioDoble,(x - 2)**2,NewtonMOD,2.0,0.0
-Logaritmo,ln(x) + x - 4,Biseccion,2.926271438598633,5.04699309900047e-7
-Logaritmo,ln(x) + x - 4,FalsaPosicion,2.92627148182219,5.62693726280372e-7
-Logaritmo,ln(x) + x - 4,PuntoFijo,2.9262708236452406,-3.20403232834110e-7
-Logaritmo,ln(x) + x - 4,Secante,2.92627120685031,1.93755216315594e-7
+Logaritmo,ln(x) + x - 4,Biseccion,2.926271066069603,4.86525664200599e-9
+Logaritmo,ln(x) + x - 4,FalsaPosicion,2.92627106345073,1.35143451984732e-9
+Logaritmo,ln(x) + x - 4,PuntoFijo,2.9262710591868366,-4.36957048322029e-9
+Logaritmo,ln(x) + x - 4,Secante,2.92627106244350,0
 Logaritmo,ln(x) + x - 4,Newton,2.9262710623672676,-1.02284403169506e-10
 Logaritmo,ln(x) + x - 4,NewtonMOD,2.92627106276831,4.35806946086359e-10
-Exponencial,exp(-x) - x,Biseccion,0.567143440246582,-2.34815726529725e-7
-Exponencial,exp(-x) - x,FalsaPosicion,0.567143376033921,-1.34185290545652e-7
-Exponencial,exp(-x) - x,PuntoFijo,0.5671430358934766,3.98863541639649e-7
-Exponencial,exp(-x) - x,Secante,0.567143309277369,-2.95682086592919e-8
-Exponencial,exp(-x) - x,Newton,0.5671431826821582,1.68824628943298e-7
-Exponencial,exp(-x) - x,NewtonMOD,0.567143692816613,-6.30629115705439e-7
-Trigonometrica,cos(x) - x,Biseccion,0.7390851974487305,-1.07502076684973e-7
-Trigonometrica,cos(x) - x,FalsaPosicion,0.739084782448923,5.87046549149761e-7
-Trigonometrica,cos(x) - x,PuntoFijo,0.7390855190619416,-6.45757869177643e-7
-Trigonometrica,cos(x) - x,Secante,0.739084877805598,4.27456492979594e-7
+Exponencial,exp(-x) - x,Biseccion,0.5671432875096798,4.54487869561149e-9
+Exponencial,exp(-x) - x,FalsaPosicion,0.567143290527537,-1.84535497993465e-10
+Exponencial,exp(-x) - x,PuntoFijo,0.5671432919548633,-2.42136088957068e-9
+Exponencial,exp(-x) - x,Secante,0.567143290409784,0
+Exponencial,exp(-x) - x,Newton,0.5671432904097817,3.33066907387547e-15
+Exponencial,exp(-x) - x,NewtonMOD,0.567143290409813,-4.58522109170190e-14
+Trigonometrica,cos(x) - x,Biseccion,0.7390851341187954,-1.51233403578033e-9
+Trigonometrica,cos(x) - x,FalsaPosicion,0.739085133171071,7.37891969748716e-11
+Trigonometrica,cos(x) - x,PuntoFijo,0.7390851309466397,3.79662390415092e-9
+Trigonometrica,cos(x) - x,Secante,0.739085133215161,1.11022302462516e-16
 Trigonometrica,cos(x) - x,Newton,0.7390851332254692,-1.72525327357675e-11
 Trigonometrica,cos(x) - x,NewtonMOD,0.739085133165819,8.25784995939216e-11
-Mixta,sqrt(x) - cos(x),Biseccion,0.6417144775390625,1.30424391620032e-7
-Mixta,sqrt(x) - cos(x),FalsaPosicion,0.641714275329506,-1.16824155793616e-7
+Mixta,sqrt(x) - cos(x),Biseccion,0.6417143747210503,4.70528627172229e-9
+Mixta,sqrt(x) - cos(x),FalsaPosicion,0.641714370545322,-4.00519506449371e-10
 Mixta,sqrt(x) - cos(x),PuntoFijo,NAN,NAN
-Mixta,sqrt(x) - cos(x),Secante,0.641714834848827,5.67319304978220e-7
+Mixta,sqrt(x) - cos(x),Secante,0.641714370872883,0
 Mixta,sqrt(x) - cos(x),Newton,0.641714371759298,1.08385045383130e-9
 Mixta,sqrt(x) - cos(x),NewtonMOD,0.641714370861967,-1.33472122243461e-11

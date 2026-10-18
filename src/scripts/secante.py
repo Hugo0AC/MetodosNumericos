@@ -11,11 +11,11 @@ def secante(funcion, x_actual, x_anterior, tolerancia, max_iteraciones): #Paso i
         x_nueva = nuevo_punto(funcion, x_actual, x_anterior)
         error = abs((x_nueva - x_actual) / x_nueva) * 100 if x_nueva != 0 else abs(x_nueva - x_actual) * 100
         errores.append(error)
+
+        if error < tolerancia:
+            return x_nueva, errores, iteracion
         x_anterior = x_actual
         x_actual = x_nueva
-
-        if abs(funcion(x_nueva)) < tolerancia:
-            return x_nueva, errores, iteracion
         
         iteracion += 1
 

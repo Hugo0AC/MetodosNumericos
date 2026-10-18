@@ -32,8 +32,6 @@ def falsa_posicion(funcion, a, b, tolerancia, max_iteraciones): #iteracion
             b = c
         else:
             a = c
-        if abs(funcion(c)) < tolerancia:
-            return c, errores, iteracion
         iteracion += 1
 
     return None, "No se llego a una solucion dentro del numero maximo de itraciones"
