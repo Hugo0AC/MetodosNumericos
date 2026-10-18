@@ -2,7 +2,16 @@
 
 ## Instalacion Repositorio
 
-completar al final...
+Para cargar el repositorio de forma correcta se deben seguir los siguientes pasos:
+
+1. Clonar el repositorio en la carpeta (git clone https://github.com/Hugo0AC/MetodosNumericos.git)
+2. Entrar en la carpeta del proyecto (cd MetodosNumericos)
+3. Verificar si pyhton esta instalado (python --version o py --version)
+4. Dado que el repositorio creado dentro de un entorno virtual, hay que crearlo (python -m venv venv).
+5. Activar el entorno virtual (.\venv\Scripts\Activate.ps1)
+   1. En caso de haber fallado el comando anterior, primero hay que escribir lo siguiente (Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass) y luego volver a activar el entorno
+6. Instalar dependencias (pyhton -m pip install -r requirements.txt)
+7. Ejecutar programa (pyhton .\src\main.py)
 
 ## Bibliotecas
 
